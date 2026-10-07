@@ -14,8 +14,20 @@
 
 ## 安装
 
-DSH 里用插件管理器安装这个目录（`plugin_manager` → `install_bundle`，target 指向本目录的绝对路径），
-它会做三件事：把包 `link:` 进 profile、把 bundle 加进 `dsh.profile.bundles`、激活。
+**方式一：按包名安装（推荐，已发布到 npm）**
+
+在 DSH 的插件管理器里安装 `dsh-daily-zone`（`plugin_manager` → `install_bundle`，target = `dsh-daily-zone`）。
+
+**方式二：从本地目录安装（改代码时用这个）**
+
+把仓库 clone 到本地，然后 `install_bundle` 的 target 指向该目录的绝对路径（如
+`C:\path\to\dsh-daily-zone`）。它会做三件事：把包 `link:` 进 profile、把 bundle 加进
+`dsh.profile.bundles`、立即激活 —— 之后改代码即可直接生效。
+
+> 不要去插件管理器的「Git 仓库」入口填仓库地址：那个入口底层是 `pnpm add <地址>`，
+> 会重解整个 profile 的依赖图，撞上 profile 里已有的非注册表包（例如 `dshmarket`）就会 404。
+
+两种方式共同的注意事项：
 
 - **Host 半侧**（`index.js`）改动需要**重启 DSH** 才生效
 - **Client 半侧**（`client.js`）改动由客户端 HMR 重载；重建过 bundle 后需要**刷新页面**
@@ -93,9 +105,14 @@ withService('webServer', (webServer) => { /* webServer.register(...) */ })
 ## 开发
 
 ```powershell
-node tests/smoke-client.mjs      # 离线冒烟测试（桩 React/桩外壳）
-node tests/check-encoding.mjs .  # 中文文件编码体检
+npm test                    # 离线冒烟测试（桩 React/桩外壳）
+npm run check:encoding      # 中文文件编码体检（本机 shell 会把中文写坏，靠它兜底）
+npm run check               # 上面两项一起跑
+npm pack --dry-run          # 看发布出去会包含哪些文件（应为 9 个：入口/patch/图标/locale/README/LICENSE）
 ```
+
+发布 npm 包时 `prepublishOnly` 会自动跑 `npm run check` 与 `scripts/verify-package.mjs`
+（查必备文件、声明指向、编码、包名与 patch 是否一致），任一项不过就拒绝发布。
 
 冒烟测试覆盖：factory/apply/label thunk 不抛错、网页面板加载后无提示行、
 **真跑一次「直接对话」并断言「建工作区 → 改名 → openWorkspace」**、以及复用路径不重复创建。

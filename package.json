@@ -1,10 +1,18 @@
 {
   "name": "dsh-daily-zone",
   "version": "0.1.0",
-  "private": true,
-  "type": "module",
   "description": "DSH 侧边栏「日常区」：豆包网页版入口 + 免选工作区的直连对话 + 缓存自动清理 · A Daily Zone section for the DSH sidebar: an embedded Doubao web entry, workspace-free direct chat, and cache auto-cleanup.",
   "license": "MIT",
+  "author": "userwq666 (https://github.com/userwq666)",
+  "type": "module",
+  "homepage": "https://github.com/userwq666/dsh-daily-zone#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/userwq666/dsh-daily-zone.git"
+  },
+  "bugs": {
+    "url": "https://github.com/userwq666/dsh-daily-zone/issues"
+  },
   "keywords": [
     "deepseek",
     "harness",
@@ -16,22 +24,6 @@
     "cache-cleanup"
   ],
   "icon": "./icon.svg",
-  "scripts": {
-    "test": "node tests/smoke-client.mjs",
-    "check:encoding": "node tests/check-encoding.mjs ."
-  },
-  "engines": {
-    "node": ">=20"
-  },
-  "files": [
-    "index.js",
-    "client.js",
-    "cordis.patch.yml",
-    "icon.svg",
-    "locale",
-    "README.md",
-    "LICENSE"
-  ],
   "exports": {
     ".": "./index.js",
     "./client": "./client.js",
@@ -48,6 +40,28 @@
       "immediately": true
     }
   },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "icon.svg",
+    "locale",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node tests/smoke-client.mjs",
+    "check:encoding": "node tests/check-encoding.mjs .",
+    "check": "npm run test && npm run check:encoding",
+    "prepublishOnly": "npm run check && node scripts/verify-package.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "peerDependencies": {
     "@deepseek-ai/cordis": "^4.0.1",
     "@deepseek-ai/schemastery": "^3.18.1"
@@ -56,14 +70,5 @@
     "@deepseek-ai/schemastery": {
       "optional": true
     }
-  },
-  "author": "userwq666",
-  "homepage": "https://github.com/userwq666/dsh-daily-zone",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/userwq666/dsh-daily-zone.git"
-  },
-  "bugs": {
-    "url": "https://github.com/userwq666/dsh-daily-zone/issues"
   }
 }
