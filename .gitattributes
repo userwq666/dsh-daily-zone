@@ -1,0 +1,12 @@
+# 统一行尾为 LF，保证跨平台一致（本插件没有二进制文件）
+* text=auto eol=lf
+
+# 明确各自的语言，便于 GitHub 正确统计与高亮
+*.js    text eol=lf
+*.mjs   text eol=lf
+*.json  text eol=lf
+*.yml   text eol=lf
+*.md    text eol=lf
+*.svg   text eol=lf
+.gitattributes text eol=lf
+.gitignore     text eol=lf

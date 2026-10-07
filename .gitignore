@@ -1,0 +1,15 @@
+# 日志与临时产物
+*.log
+*.jsonl
+.plugin-manager/
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# 依赖与构建产物（本插件无构建步骤，留个位置以防万一）
+node_modules/
+dist/
+*.tgz
